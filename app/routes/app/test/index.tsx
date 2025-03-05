@@ -6,7 +6,6 @@ import { useForm } from "@tanstack/react-form"
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: {} })
   const isAuthenticated = useIsAuthenticated()
-
   const form = useForm({
     defaultValues: {
       username: me?.profile?.name || "",
@@ -18,7 +17,6 @@ function RouteComponent() {
       console.log("Username updated to:", value.username)
     },
   })
-
   return (
     <div className="flex flex-col gap-6 items-center justify-center min-h-screen w-full max-w-2xl mx-auto p-5">
       <header>
