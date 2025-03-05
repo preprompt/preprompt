@@ -145,7 +145,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
             e.stopPropagation()
             handleSelect(e as React.MouseEvent<HTMLInputElement>)
           }}
-          className="mr-2"
+          className="relative appearance-none w-4 h-4 mr-2 bg-gray-700 border border-gray-600 rounded cursor-pointer checked:bg-gray-600 checked:after:content-['✓'] checked:after:text-white checked:after:absolute checked:after:text-xs checked:after:flex checked:after:items-center checked:after:justify-center checked:after:inset-0"
         />
 
         <FontAwesomeIcon
@@ -161,11 +161,11 @@ const TreeItem: React.FC<TreeItemProps> = ({
           {node.name}
         </span>
 
-        {node.url && (
+        {/* {node.url && (
           <span className="text-xs text-gray-400 truncate max-w-32">
             {node.url}
           </span>
-        )}
+        )} */}
       </div>
 
       {isExpanded && hasChildren && (
