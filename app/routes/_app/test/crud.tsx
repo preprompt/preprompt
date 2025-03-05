@@ -1,13 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useAccount, useIsAuthenticated } from "jazz-react"
 import { ListOfUrls, Website } from "~/jazz-schema"
 
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: { websites: {} } })
   const isAuthenticated = useIsAuthenticated()
+  const navigate = useNavigate()
   if (!isAuthenticated) {
-    // TODO: redirect to /test
-    return <div>Not authenticated</div>
+    navigate({ to: "/test" })
   }
   console.log(me, "me")
 
@@ -64,6 +64,7 @@ function RouteComponent() {
                       { owner: me },
                     )
 
+                    // TODO: why fail?
                     me?.root.websites.push(newWebsite)
                     nameInput.value = ""
                     urlInput.value = ""

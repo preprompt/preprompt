@@ -1,11 +1,12 @@
 import { useForm } from "@tanstack/react-form"
-import { createFileRoute } from "@tanstack/react-router"
-import { useAccount } from "jazz-react"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { useAccount, useIsAuthenticated } from "jazz-react"
 import { AuthButton } from "~/components/AuthButton"
 
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: {} })
-  console.log(me, "me")
+  const isAuthenticated = useIsAuthenticated()
+  const navigate = useNavigate()
   const form = useForm({
     defaultValues: {
       username: me?.profile?.name || "",
@@ -100,6 +101,16 @@ function RouteComponent() {
             </form>
           </div>
         </div>
+        {isAuthenticated && (
+          <div className="text-center">
+            <button
+              className="py-2 px-4 rounded-md text-white font-medium bg-blue-600 hover:bg-blue-700"
+              onClick={() => navigate({ to: "/test/crud" })}
+            >
+              CRUD
+            </button>
+          </div>
+        )}
       </main>
     </div>
   )
