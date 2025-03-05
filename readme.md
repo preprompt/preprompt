@@ -1,4 +1,4 @@
-# [PrePrompt](https://prepromt.app)
+# [PrePrompt](https://preprompt.app)
 
 > Give AI right context
 
