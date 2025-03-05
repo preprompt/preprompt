@@ -21,7 +21,7 @@ function ChatLayout() {
 
   const recentChats =
     me?.root?.chats
-      ?.map((chat) => ({
+      ?.map((chat: any) => ({
         id: chat?.id,
         title: chat?.name,
         created: chat?._edits?.name?.madeAt || new Date(),
@@ -29,7 +29,7 @@ function ChatLayout() {
           chat?._edits?.name?.madeAt?.toLocaleDateString() ||
           new Date().toLocaleDateString(),
       }))
-      .sort((a, b) => b.created.getTime() - a.created.getTime()) || []
+      .sort((a: any, b: any) => b.created.getTime() - a.created.getTime()) || []
 
   return (
     <SidebarProvider>
@@ -53,7 +53,7 @@ function ChatLayout() {
           </SidebarHeader>
           <SidebarContent className="px-4 py-2">
             <SidebarMenu>
-              {recentChats.map((chat) => (
+              {recentChats.map((chat: any) => (
                 <SidebarMenuItem key={chat.id}>
                   <SidebarMenuButton asChild>
                     <Button
