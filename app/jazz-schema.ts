@@ -5,6 +5,7 @@ export class JazzProfile extends Profile {
 }
 export class AccountRoot extends CoMap {
   websites = co.ref(ListOfWebsites)
+  activeUrls = co.ref(ListOfUrls)
 }
 
 export class Website extends CoMap {
@@ -27,7 +28,10 @@ export class JazzAccount extends Account {
     if (this.root === undefined) {
       const group = Group.create()
       this.root = AccountRoot.create(
-        { websites: ListOfWebsites.create([]) },
+        {
+          websites: ListOfWebsites.create([]),
+          activeUrls: ListOfUrls.create([]),
+        },
         group,
       )
     }
