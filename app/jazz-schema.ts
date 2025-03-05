@@ -24,7 +24,8 @@ export class ListOfUrls extends CoList.Of(co.ref(Url)) {}
 export class JazzAccount extends Account {
   root = co.ref(AccountRoot)
   profile = co.ref(JazzProfile)
-
+  // TODO: not sure if there should be `owner` in the account
+  // i tried with both and without, and all options fail
   migrate(this: JazzAccount) {
     if (this.root === undefined) {
       this.root = AccountRoot.create({

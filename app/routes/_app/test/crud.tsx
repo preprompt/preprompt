@@ -23,9 +23,9 @@ function RouteComponent() {
           },
           { owner: me },
         )
-        // TODO: why fail? and why ts error?
-        // TODO: how does `me` actually get types
-        // TODO: how to do CRUD without `me`
+        // TODO: use CRUD direct, not through `me`. see https://jazz.tools/docs/react/using-covalues/comaps
+        // below fails as `websites` is of type `never` for some reason.
+        // @ts-ignore
         me.root.websites.push(newWebsite)
       }
     },
