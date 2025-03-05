@@ -150,7 +150,7 @@ const TreeItem: React.FC<TreeItemProps> = ({
 
         <FontAwesomeIcon
           icon={icon}
-          className="mr-2 text-sm cursor-pointer"
+          className="mr-2 text-sm opacity-60 cursor-pointer"
           onClick={handleItemClick}
         />
 

@@ -54,25 +54,11 @@ function RouteComponent() {
           </div>
         )}
 
-        {isAnalyzing && (
-          <div className="bg-white/5 p-6 rounded-lg">
-            <p className="text-center">Analyzing selected elements...</p>
-            <div className="w-full h-2 bg-white/10 rounded-full mt-4 overflow-hidden">
-              <div className="h-full bg-blue-500 animate-pulse rounded-full"></div>
-            </div>
-          </div>
-        )}
-
-        {!isAnalyzing && analysisResult && (
-          <div className="bg-white/5 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">Analysis results</h2>
-            <pre className="whitespace-pre-wrap bg-black/30 p-4 rounded-md">
-              {analysisResult}
-            </pre>
-          </div>
-        )}
-
-        {!isAnalyzing && !analysisResult && selectedElements.length === 0 && (
+        {selectedElements.length > 0 ? (
+          <p className="text-center text-gray-400 mt-10">
+            Selected elements: {selectedElements.length}
+          </p>
+        ) : (
           <p className="text-center text-gray-400 mt-10">
             Select elements in the sidebar for analysis
           </p>
