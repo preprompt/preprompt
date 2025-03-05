@@ -2,7 +2,6 @@ import { useState } from "react"
 import Tree from "./Tree"
 import { WebsiteElement } from "./TreeItem"
 import { cn } from "~/lib/utils"
-import { Button } from "./Button"
 
 type SidebarProps = {
   className?: string

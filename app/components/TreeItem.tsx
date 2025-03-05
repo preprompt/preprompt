@@ -31,11 +31,15 @@ export type WebsiteElement = {
   children?: WebsiteElement[]
 }
 
-type TreeItemProps = {
+export type TreeItemProps = {
   node: WebsiteElement
   level: number
   onToggleExpand: (nodeId: string) => void
-  onNodeSelect: (nodeId: string, selected: boolean) => void
+  onNodeSelect: (
+    nodeId: string,
+    isSelected: boolean,
+    childIds?: string[],
+  ) => void
   expandedNodes: Set<string>
   selectedNodes: Set<string>
 }
@@ -84,14 +88,41 @@ const TreeItem: React.FC<TreeItemProps> = ({
     }
   }
 
-  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onNodeSelect(node.id, e.target.checked)
+  const getAllChildIds = (node: WebsiteElement): string[] => {
+    let ids: string[] = []
+    if (node.children && node.children.length > 0) {
+      node.children.forEach((child) => {
+        ids.push(child.id)
+        ids = [...ids, ...getAllChildIds(child)]
+      })
+    }
+    return ids
+  }
+
+  const handleSelect = (e: React.MouseEvent<HTMLInputElement>) => {
+    const isChecked = (e.target as HTMLInputElement).checked
+
+    if (hasChildren) {
+      const childIds = getAllChildIds(node)
+      onNodeSelect(node.id, isChecked, childIds)
+    } else {
+      onNodeSelect(node.id, isChecked)
+    }
+  }
+
+  const handleItemClick = () => {
+    if (hasChildren) {
+      const childIds = getAllChildIds(node)
+      onNodeSelect(node.id, !isSelected, childIds)
+    } else {
+      onNodeSelect(node.id, !isSelected)
+    }
   }
 
   const icon = getIconForType(node.type, isExpanded)
 
   return (
-    <div className="w-full">
+    <div className="w-full text-xs">
       <div
         className="flex items-center py-1.5 px-3 my-0.5 rounded-lg hover:bg-white/5 transition-colors"
         style={{ paddingLeft: `${level * 10 + 8}px` }}
@@ -109,14 +140,26 @@ const TreeItem: React.FC<TreeItemProps> = ({
         <input
           type="checkbox"
           checked={isSelected}
-          onChange={handleSelect}
+          onChange={() => {}}
+          onClick={(e) => {
+            e.stopPropagation()
+            handleSelect(e as React.MouseEvent<HTMLInputElement>)
+          }}
           className="mr-2"
-          onClick={(e) => e.stopPropagation()}
         />
 
-        <FontAwesomeIcon icon={icon} className="mr-2 text-sm" />
+        <FontAwesomeIcon
+          icon={icon}
+          className="mr-2 text-sm cursor-pointer"
+          onClick={handleItemClick}
+        />
 
-        <span className="truncate flex-1">{node.name}</span>
+        <span
+          className="truncate flex-1 cursor-pointer"
+          onClick={handleItemClick}
+        >
+          {node.name}
+        </span>
 
         {node.url && (
           <span className="text-xs text-gray-400 truncate max-w-32">
