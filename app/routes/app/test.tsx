@@ -1,23 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { useAccount, useIsAuthenticated } from "jazz-react"
+import { AuthButton } from "~/components/AuthButton"
 
 function RouteComponent() {
-  // const state = useCoState(Chat, "1")
-  // const { me } = useAccount({ root: { chats: [{}] } })
-  // if (!me) return <></>
-  // console.log(me, "me")
-  // const chats =
-  //   me?.root?.chats
-  //     ?.map((chat) => ({
-  //       id: chat?.id,
-  //       name: chat?.name,
-  //       created: chat?._edits?.name?.madeAt || new Date(),
-  //       messageCount: chat?.messages?.length || 0,
-  //     }))
-  //     .sort((a, b) => b.created.getTime() - a.created.getTime()) || []
-
+  const { me } = useAccount({ profile: {}, root: {} })
+  const isAuthenticated = useIsAuthenticated()
+  console.log(isAuthenticated, "isAuthenticated")
   return (
     <>
-      <div>test</div>
+      <header>
+        <nav className="container flex justify-between items-center py-3">
+          {isAuthenticated ? (
+            <span></span>
+          ) : (
+            <span>Auth to share data with another device</span>
+          )}
+          <AuthButton />
+        </nav>
+      </header>
+      <main className="container mt-16 flex flex-col gap-8">
+        <div className="text-center">
+          <pre className="text-left inline-block bg-gray-100 p-4 rounded-lg overflow-auto max-w-full">
+            {JSON.stringify(me?.root)}
+          </pre>
+        </div>
+      </main>
     </>
   )
 }

@@ -1,23 +1,42 @@
-import { useAccount, useIsAuthenticated } from "jazz-react"
-import { useState } from "react"
-import { Button } from "./Button"
-import { AuthModal } from "./AuthModal"
+import { useAccount, usePasskeyAuth } from "jazz-react"
 
 export function AuthButton() {
-  const isAuthenticated = useIsAuthenticated()
   const { logOut } = useAccount()
-  const [open, setOpen] = useState(false)
-  if (isAuthenticated) {
+
+  const auth = usePasskeyAuth({
+    appName: "PrePrompt",
+  })
+
+  function handleLogOut() {
+    logOut()
+    window.history.pushState({}, "", "/")
+  }
+
+  if (auth.state === "signedIn") {
     return (
-      <Button variant="outline" onClick={logOut}>
-        Sign out
-      </Button>
+      <button
+        className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+        onClick={handleLogOut}
+      >
+        Log out
+      </button>
     )
   }
+
   return (
-    <>
-      <Button onClick={() => setOpen(true)}>Sign up</Button>
-      <AuthModal open={open} onOpenChange={setOpen} />
-    </>
+    <div className="flex gap-2">
+      <button
+        className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+        onClick={() => auth.signUp("")}
+      >
+        Sign up
+      </button>
+      <button
+        onClick={() => auth.logIn()}
+        className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+      >
+        Log in
+      </button>
+    </div>
   )
 }
