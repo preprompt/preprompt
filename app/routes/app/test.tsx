@@ -34,13 +34,13 @@ function RouteComponent() {
       <main className="container flex flex-col gap-8">
         <div className="text-center">
           <pre className="text-left text-sm inline-block bg-white/50 p-4 rounded-lg overflow-auto max-w-full">
-            {JSON.stringify(me?.root)}
+            {JSON.stringify(me?.root, null, 2)}
           </pre>
         </div>
         <div>
           <div className="bg-white/5 rounded-lg p-6 shadow-lg max-w-md mx-auto">
             <h2 className="text-2xl font-bold mb-2 text-center">
-              Welcome, {me?.profile?.name || "User"}!
+              Welcome, {me?.profile?.name || "User"}
             </h2>
             <form
               onSubmit={(e) => {
@@ -100,7 +100,7 @@ function RouteComponent() {
                         : "bg-gray-400 cursor-not-allowed"
                     }`}
                   >
-                    {isSubmitting ? "Submitting..." : "Submit"}
+                    {isSubmitting ? "Submitting..." : "Update"}
                   </button>
                 )}
               />
