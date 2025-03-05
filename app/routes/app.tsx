@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router"
 import { JazzProvider } from "jazz-react"
 import { ChatAccount } from "../jazz-schema"
+import { JazzInspector } from "jazz-inspector"
 
 function LayoutComponent() {
   return (
@@ -13,6 +14,7 @@ function LayoutComponent() {
         }}
       >
         <Outlet />
+        <JazzInspector />
       </JazzProvider>
     </>
   )

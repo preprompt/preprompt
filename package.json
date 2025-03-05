@@ -19,6 +19,7 @@
     "@tanstack/start": "^1.112.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "jazz-inspector": "^0.10.12",
     "jazz-react": "^0.10.15",
     "jazz-tools": "^0.10.15",
     "react": "^19.0.0",
