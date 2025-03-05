@@ -14,7 +14,9 @@ function LayoutComponent() {
         AccountSchema={JazzAccount}
       >
         <Outlet />
-        <JazzInspector />
+        <div className="hidden">
+          <JazzInspector />
+        </div>
       </JazzProvider>
     </>
   )
