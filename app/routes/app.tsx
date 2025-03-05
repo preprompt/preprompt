@@ -7,10 +7,11 @@ function LayoutComponent() {
   return (
     <>
       <JazzProvider
-        AccountSchema={JazzAccount}
         sync={{
-          peer: "wss://cloud.jazz.tools/?key=jazz@preprompt.app",
+          peer: "wss://cloud.jazz.tools/?key=jazz@preprompt.app", // which server peer to sync jazz state with
+          when: "signedUp", // this way when user hasn't signed up, data is stored locally
         }}
+        AccountSchema={JazzAccount}
       >
         <Outlet />
         <JazzInspector />
