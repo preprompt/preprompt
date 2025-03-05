@@ -1,12 +1,7 @@
-import {
-  Account,
-  CoMap,
-  Group,
-  Profile,
-  co,
-  CoPlainText,
-  CoList,
-} from "jazz-tools"
+import { Account, co, CoList, CoMap, Group, Profile } from "jazz-tools"
+
+// TODO: not actually sure what diff is there between Profile and User
+// is it public/private access only?
 
 // public fields
 export class JazzProfile extends Profile {
@@ -14,22 +9,21 @@ export class JazzProfile extends Profile {
 }
 // private fields
 export class AccountRoot extends CoMap {
-  chats = co.ref(ListOfChats)
+  websites = co.ref(ListOfWebsites)
 }
 
-// chat has messages inside between user and AI
-export class Chat extends CoMap {
+export class Website extends CoMap {
+  url = co.string // unique
   name = co.string
-  messages = co.ref(ListOfChatMessages)
+  urls = co.ref(ListOfUrls)
 }
-export class ListOfChats extends CoList.Of(co.ref(Chat)) {}
+export class ListOfWebsites extends CoList.Of(co.ref(Website)) {}
 
-// chat message contains content
-export class ChatMessage extends CoMap {
+export class Url extends CoMap {
+  absoluteUrl = co.string
   content = co.string
-  text = co.ref(CoPlainText)
 }
-export class ListOfChatMessages extends CoList.Of(co.ref(ChatMessage)) {}
+export class ListOfUrls extends CoList.Of(co.ref(Url)) {}
 
 export class JazzAccount extends Account {
   profile = co.ref(JazzProfile)
@@ -37,7 +31,10 @@ export class JazzAccount extends Account {
   migrate(this: JazzAccount) {
     if (this.root === undefined) {
       const group = Group.create()
-      this.root = AccountRoot.create({ chats: ListOfChats.create([]) }, group)
+      this.root = AccountRoot.create(
+        { websites: ListOfWebsites.create([]) },
+        group,
+      )
     }
   }
 }
