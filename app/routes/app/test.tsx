@@ -6,6 +6,7 @@ function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: {} })
   const isAuthenticated = useIsAuthenticated()
   console.log(isAuthenticated, "isAuthenticated")
+
   return (
     <>
       <header>
