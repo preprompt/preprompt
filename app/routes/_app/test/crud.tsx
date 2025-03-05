@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { url } from "inspector"
 import { useAccount, useIsAuthenticated } from "jazz-react"
 import { ListOfUrls, Website } from "~/jazz-schema"
 
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: { websites: {} } })
+  if (!me) return <></>
   const isAuthenticated = useIsAuthenticated()
   if (!isAuthenticated) {
     // TODO: redirect to /test
@@ -54,20 +54,19 @@ function RouteComponent() {
 
                   if (nameInput.value && urlInput.value) {
                     console.log(me, "me")
-                    console.log(me?.websites)
-                    return
-                    // const newWebsite = Website.create(
-                    //   {
-                    //     name: nameInput.value,
-                    //     url: urlInput.value,
-                    //     urls: ListOfUrls.create([]),
-                    //   },
-                    //   { owner: me },
-                    // )
+                    console.log(me?.root.websites)
+                    const newWebsite = Website.create(
+                      {
+                        name: nameInput.value,
+                        url: urlInput.value,
+                        urls: ListOfUrls.create([]),
+                      },
+                      { owner: me },
+                    )
 
-                    // me?.websites.push(newWebsite)
-                    // nameInput.value = ""
-                    // urlInput.value = ""
+                    me?.root.websites.push(newWebsite)
+                    nameInput.value = ""
+                    urlInput.value = ""
                   }
                 }}
               >
