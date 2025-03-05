@@ -15,7 +15,7 @@ export function AuthButton() {
   if (auth.state === "signedIn") {
     return (
       <button
-        className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+        className="bg-stone-100/50 py-1.5 px-3 text-sm rounded-md"
         onClick={handleLogOut}
       >
         Log out
@@ -26,14 +26,14 @@ export function AuthButton() {
   return (
     <div className="flex gap-2">
       <button
-        className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+        className="bg-stone-100/50 py-1.5 px-3 text-sm rounded-md"
         onClick={() => auth.signUp("")}
       >
         Sign up
       </button>
       <button
         onClick={() => auth.logIn()}
-        className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+        className="bg-stone-100/50 py-1.5 px-3 text-sm rounded-md"
       >
         Log in
       </button>
