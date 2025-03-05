@@ -1,6 +1,7 @@
 import { useAccount, useIsAuthenticated } from "jazz-react"
 import { useState } from "react"
 import { Button } from "./Button"
+import { AuthModal } from "./AuthModal"
 
 export function AuthButton() {
   const isAuthenticated = useIsAuthenticated()
@@ -16,7 +17,7 @@ export function AuthButton() {
   return (
     <>
       <Button onClick={() => setOpen(true)}>Sign up</Button>
-      {/* <AuthModal open={open} onOpenChange={setOpen} /> */}
+      <AuthModal open={open} onOpenChange={setOpen} />
     </>
   )
 }
