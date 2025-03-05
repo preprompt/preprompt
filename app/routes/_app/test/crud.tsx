@@ -4,7 +4,6 @@ import { ListOfUrls, Website } from "~/jazz-schema"
 
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: { websites: {} } })
-  if (!me) return <></>
   const isAuthenticated = useIsAuthenticated()
   if (!isAuthenticated) {
     // TODO: redirect to /test
@@ -12,6 +11,7 @@ function RouteComponent() {
   }
   console.log(me, "me")
 
+  if (!me) return <></>
   return (
     <div className="flex flex-col gap-6 items-center justify-center min-h-screen w-full max-w-2xl mx-auto p-5">
       <main className="container flex flex-col gap-8">
