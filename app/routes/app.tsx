@@ -8,7 +8,6 @@ function LayoutComponent() {
     <>
       <JazzProvider
         AccountSchema={ChatAccount}
-        // TODO: should be diff maybe
         sync={{
           peer: "wss://cloud.jazz.tools/?key=jazz@preprompt.app",
         }}
