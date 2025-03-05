@@ -1,44 +1,43 @@
-import { co, CoMap, CoList, Account, CoPlainText, CoFeed } from "jazz-tools"
+import {
+  Account,
+  CoMap,
+  Group,
+  Profile,
+  co,
+  CoPlainText,
+  CoList,
+} from "jazz-tools"
 
-export class Reactions extends CoFeed.Of(co.string) {}
-
-export class ChatMessage extends CoMap {
-  content = co.string
-  text = co.ref(CoPlainText)
-  role = co.literal("user", "system", "assistant")
-
-  reactions = co.optional.ref(Reactions)
+// public fields
+export class JazzProfile extends Profile {
+  username = co.string
+}
+// private fields
+export class AccountRoot extends CoMap {
+  chats = co.ref(ListOfChats)
 }
 
-export class ListOfChatMessages extends CoList.Of(co.ref(ChatMessage)) {}
-
+// chat has messages inside between user and AI
 export class Chat extends CoMap {
   name = co.string
   messages = co.ref(ListOfChatMessages)
 }
-
-export class UserRoot extends CoMap {
-  chats = co.ref(ListOfChats)
-}
-
 export class ListOfChats extends CoList.Of(co.ref(Chat)) {}
 
-export class ChatAccount extends Account {
-  root = co.ref(UserRoot)
+// chat message contains content
+export class ChatMessage extends CoMap {
+  content = co.string
+  text = co.ref(CoPlainText)
+}
+export class ListOfChatMessages extends CoList.Of(co.ref(ChatMessage)) {}
 
-  async migrate() {
-    console.log("migrate", this._refs.root)
-    if (!this._refs.root) {
-      this.root = UserRoot.create(
-        {
-          chats: ListOfChats.create([], this),
-        },
-        this,
-      )
-      console.log("created root")
+export class JazzAccount extends Account {
+  profile = co.ref(JazzProfile)
+  root = co.ref(AccountRoot)
+  migrate(this: JazzAccount) {
+    if (this.root === undefined) {
+      const group = Group.create()
+      this.root = AccountRoot.create({ chats: ListOfChats.create([]) }, group)
     }
-    const res = await this.root?.ensureLoaded({ chats: [] })
-    console.log("res", res)
-    console.log("this.root", this.root)
   }
 }

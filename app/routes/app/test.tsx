@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { useAccount } from "jazz-react"
 
 function RouteComponent() {
-  const { me } = useAccount({ root: { chats: [{}] } })
-  if (!me) return <></>
-  console.log(me, "me")
+  // const state = useCoState(Chat, "1")
+  // const { me } = useAccount({ root: { chats: [{}] } })
+  // if (!me) return <></>
+  // console.log(me, "me")
   // const chats =
   //   me?.root?.chats
   //     ?.map((chat) => ({
