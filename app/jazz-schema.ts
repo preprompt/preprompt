@@ -27,13 +27,10 @@ export class JazzAccount extends Account {
 
   migrate(this: JazzAccount) {
     if (this.root === undefined) {
-      this.root = AccountRoot.create(
-        {
-          websites: ListOfWebsites.create([]),
-          activeUrls: ListOfUrls.create([]),
-        },
-        { owner: this },
-      )
+      this.root = AccountRoot.create({
+        websites: ListOfWebsites.create([]),
+        activeUrls: ListOfUrls.create([]),
+      })
     }
   }
 }

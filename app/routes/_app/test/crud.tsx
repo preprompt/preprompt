@@ -53,18 +53,21 @@ function RouteComponent() {
                   ) as HTMLInputElement
 
                   if (nameInput.value && urlInput.value) {
-                    const newWebsite = Website.create(
-                      {
-                        name: nameInput.value,
-                        url: urlInput.value,
-                        urls: ListOfUrls.create([]),
-                      },
-                      { owner: me },
-                    )
+                    console.log(me, "me")
+                    console.log(me?.websites)
+                    return
+                    // const newWebsite = Website.create(
+                    //   {
+                    //     name: nameInput.value,
+                    //     url: urlInput.value,
+                    //     urls: ListOfUrls.create([]),
+                    //   },
+                    //   { owner: me },
+                    // )
 
-                    me?.websites.push(newWebsite)
-                    nameInput.value = ""
-                    urlInput.value = ""
+                    // me?.websites.push(newWebsite)
+                    // nameInput.value = ""
+                    // urlInput.value = ""
                   }
                 }}
               >
