@@ -17,22 +17,25 @@ export function createRouter() {
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
-      InnerWrap: ({ children }) => {
-        return (
-          <>
-            <JazzProvider
-              sync={{
-                peer: "wss://cloud.jazz.tools/?key=jazz@preprompt.app", // which server peer to sync jazz state with
-                when: "signedUp", // this way when user hasn't signed up, data is stored locally
-              }}
-              AccountSchema={JazzAccount}
-            >
-              {children}
-              <JazzInspector />
-            </JazzProvider>
-          </>
-        )
-      },
+      scrollRestoration: true,
+      // TODO: somehow should remove the need to put all of app in /app
+      // JazzProvider should be wrapping the entire router
+      // InnerWrap: ({ children }) => {
+      //   return (
+      //     <>
+      //       <JazzProvider
+      //         sync={{
+      //           peer: "wss://cloud.jazz.tools/?key=jazz@preprompt.app", // which server peer to sync jazz state with
+      //           when: "signedUp", // this way when user hasn't signed up, data is stored locally
+      //         }}
+      //         AccountSchema={JazzAccount}
+      //       >
+      //         {children}
+      //         <JazzInspector />
+      //       </JazzProvider>
+      //     </>
+      //   )
+      // },
     }),
     queryClient,
   )
