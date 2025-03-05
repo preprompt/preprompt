@@ -11,7 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AppImport } from './routes/app'
+import { Route as AppImport } from './routes/_app'
 import { Route as AppIndexImport } from './routes/_app/index'
 import { Route as AppTestIndexImport } from './routes/_app/test/index'
 import { Route as AppTestChatImport } from './routes/_app/test/chat'
@@ -19,37 +19,36 @@ import { Route as AppTestChatImport } from './routes/_app/test/chat'
 // Create/Update Routes
 
 const AppRoute = AppImport.update({
-  id: '/app',
-  path: '/app',
+  id: '/_app',
   getParentRoute: () => rootRoute,
 } as any)
 
 const AppIndexRoute = AppIndexImport.update({
-  id: '/_app/',
+  id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
 const AppTestIndexRoute = AppTestIndexImport.update({
-  id: '/_app/test/',
+  id: '/test/',
   path: '/test/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
 const AppTestChatRoute = AppTestChatImport.update({
-  id: '/_app/test/chat',
+  id: '/test/chat',
   path: '/test/chat',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AppRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/app': {
-      id: '/app'
-      path: '/app'
-      fullPath: '/app'
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
       preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
     }
@@ -58,36 +57,49 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AppIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AppImport
     }
     '/_app/test/chat': {
       id: '/_app/test/chat'
       path: '/test/chat'
       fullPath: '/test/chat'
       preLoaderRoute: typeof AppTestChatImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AppImport
     }
     '/_app/test/': {
       id: '/_app/test/'
       path: '/test'
       fullPath: '/test'
       preLoaderRoute: typeof AppTestIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof AppImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface AppRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+  AppTestChatRoute: typeof AppTestChatRoute
+  AppTestIndexRoute: typeof AppTestIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+  AppTestChatRoute: AppTestChatRoute,
+  AppTestIndexRoute: AppTestIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 export interface FileRoutesByFullPath {
-  '/app': typeof AppRoute
+  '': typeof AppRouteWithChildren
   '/': typeof AppIndexRoute
   '/test/chat': typeof AppTestChatRoute
   '/test': typeof AppTestIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/app': typeof AppRoute
   '/': typeof AppIndexRoute
   '/test/chat': typeof AppTestChatRoute
   '/test': typeof AppTestIndexRoute
@@ -95,7 +107,7 @@ export interface FileRoutesByTo {
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/app': typeof AppRoute
+  '/_app': typeof AppRouteWithChildren
   '/_app/': typeof AppIndexRoute
   '/_app/test/chat': typeof AppTestChatRoute
   '/_app/test/': typeof AppTestIndexRoute
@@ -103,25 +115,19 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/app' | '/' | '/test/chat' | '/test'
+  fullPaths: '' | '/' | '/test/chat' | '/test'
   fileRoutesByTo: FileRoutesByTo
-  to: '/app' | '/' | '/test/chat' | '/test'
-  id: '__root__' | '/app' | '/_app/' | '/_app/test/chat' | '/_app/test/'
+  to: '/' | '/test/chat' | '/test'
+  id: '__root__' | '/_app' | '/_app/' | '/_app/test/chat' | '/_app/test/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  AppRoute: typeof AppRoute
-  AppIndexRoute: typeof AppIndexRoute
-  AppTestChatRoute: typeof AppTestChatRoute
-  AppTestIndexRoute: typeof AppTestIndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  AppRoute: AppRoute,
-  AppIndexRoute: AppIndexRoute,
-  AppTestChatRoute: AppTestChatRoute,
-  AppTestIndexRoute: AppTestIndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -134,23 +140,28 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/app",
+        "/_app"
+      ]
+    },
+    "/_app": {
+      "filePath": "_app.tsx",
+      "children": [
         "/_app/",
         "/_app/test/chat",
         "/_app/test/"
       ]
     },
-    "/app": {
-      "filePath": "app.tsx"
-    },
     "/_app/": {
-      "filePath": "_app/index.tsx"
+      "filePath": "_app/index.tsx",
+      "parent": "/_app"
     },
     "/_app/test/chat": {
-      "filePath": "_app/test/chat.tsx"
+      "filePath": "_app/test/chat.tsx",
+      "parent": "/_app"
     },
     "/_app/test/": {
-      "filePath": "_app/test/index.tsx"
+      "filePath": "_app/test/index.tsx",
+      "parent": "/_app"
     }
   }
 }

@@ -20,6 +20,6 @@ function LayoutComponent() {
   )
 }
 
-export const Route = createFileRoute("/app")({
+export const Route = createFileRoute("/_app")({
   component: LayoutComponent,
 })
