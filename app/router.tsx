@@ -1,9 +1,5 @@
 import { QueryClient } from "@tanstack/react-query"
-import {
-  createFileRoute,
-  createRouter as createTanStackRouter,
-  Outlet,
-} from "@tanstack/react-router"
+import { createRouter as createTanStackRouter } from "@tanstack/react-router"
 import { routerWithQueryClient } from "@tanstack/react-router-with-query"
 import { JazzInspector } from "jazz-inspector"
 import { JazzProvider } from "jazz-react"
@@ -21,7 +17,7 @@ export function createRouter() {
       defaultPreload: "intent",
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
-      Wrap: ({ children }) => {
+      InnerWrap: ({ children }) => {
         return (
           <>
             <JazzProvider
