@@ -112,6 +112,6 @@ function RouteComponent() {
   )
 }
 
-export const Route = createFileRoute("/app/test")({
+export const Route = createFileRoute("/app/test/")({
   component: RouteComponent,
 })
