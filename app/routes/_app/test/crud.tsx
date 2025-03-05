@@ -1,11 +1,36 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { useAccount, useIsAuthenticated } from "jazz-react"
 import { ListOfUrls, Website } from "~/jazz-schema"
+import { useForm } from "@tanstack/react-form"
 
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: { websites: {} } })
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate()
+
+  const form = useForm({
+    defaultValues: {
+      websiteName: "",
+      websiteUrl: "",
+    },
+    onSubmit: async ({ value }) => {
+      if (me) {
+        const newWebsite = Website.create(
+          {
+            name: value.websiteName,
+            url: value.websiteUrl,
+            urls: ListOfUrls.create([]),
+          },
+          { owner: me },
+        )
+        // TODO: why fail? and why ts error?
+        // TODO: how does `me` actually get types
+        // TODO: how to do CRUD without `me`
+        me.root.websites.push(newWebsite)
+      }
+    },
+  })
+
   if (!isAuthenticated) {
     navigate({ to: "/test" })
   }
@@ -19,61 +44,108 @@ function RouteComponent() {
         <div className="flex flex-col gap-4">
           <div className="p-4 border rounded-md">
             <h2 className="text-xl font-semibold mb-3">Create Website</h2>
-            <div className="flex gap-4 items-end">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                form.handleSubmit()
+              }}
+              className="flex gap-4 items-end"
+            >
               <div className="flex flex-col gap-1 flex-grow">
-                <label htmlFor="website-name" className="text-sm font-medium">
-                  Website Name
-                </label>
-                <input
-                  id="website-name"
-                  type="text"
-                  className="px-3 py-2 border rounded-md"
-                  placeholder="My Website"
-                />
+                <form.Field
+                  name="websiteName"
+                  validators={{
+                    onChange: ({ value }) =>
+                      !value ? "Website name is required" : undefined,
+                  }}
+                >
+                  {(field) => (
+                    <>
+                      <label
+                        htmlFor={field.name}
+                        className="text-sm font-medium"
+                      >
+                        Website Name
+                      </label>
+                      <input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        className="px-3 py-2 border rounded-md"
+                        placeholder="My Website"
+                      />
+                      {field.state.meta.isTouched &&
+                      field.state.meta.errors.length ? (
+                        <em className="text-red-500 text-sm">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </>
+                  )}
+                </form.Field>
               </div>
+
               <div className="flex flex-col gap-1 flex-grow">
-                <label htmlFor="website-url" className="text-sm font-medium">
-                  Website URL
-                </label>
-                <input
-                  id="website-url"
-                  type="text"
-                  className="px-3 py-2 border rounded-md"
-                  placeholder="https://example.com"
-                />
+                <form.Field
+                  name="websiteUrl"
+                  validators={{
+                    onChange: ({ value }) =>
+                      !value
+                        ? "Website URL is required"
+                        : !/^https?:\/\/.+/.test(value)
+                          ? "Must be a valid URL starting with http:// or https://"
+                          : undefined,
+                  }}
+                >
+                  {(field) => (
+                    <>
+                      <label
+                        htmlFor={field.name}
+                        className="text-sm font-medium"
+                      >
+                        Website URL
+                      </label>
+                      <input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        className="px-3 py-2 border rounded-md"
+                        placeholder="https://example.com"
+                      />
+                      {field.state.meta.isTouched &&
+                      field.state.meta.errors.length ? (
+                        <em className="text-red-500 text-sm">
+                          {field.state.meta.errors.join(", ")}
+                        </em>
+                      ) : null}
+                    </>
+                  )}
+                </form.Field>
               </div>
-              <button
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                onClick={() => {
-                  const nameInput = document.getElementById(
-                    "website-name",
-                  ) as HTMLInputElement
-                  const urlInput = document.getElementById(
-                    "website-url",
-                  ) as HTMLInputElement
 
-                  if (nameInput.value && urlInput.value) {
-                    console.log(me, "me")
-                    console.log(me?.root.websites)
-                    const newWebsite = Website.create(
-                      {
-                        name: nameInput.value,
-                        url: urlInput.value,
-                        urls: ListOfUrls.create([]),
-                      },
-                      { owner: me },
-                    )
-
-                    // TODO: why fail?
-                    me?.root.websites.push(newWebsite)
-                    nameInput.value = ""
-                    urlInput.value = ""
-                  }
-                }}
+              <form.Subscribe
+                selector={(state) => [state.canSubmit, state.isSubmitting]}
               >
-                Create Website
-              </button>
-            </div>
+                {([canSubmit, isSubmitting]) => (
+                  <button
+                    type="submit"
+                    disabled={!canSubmit}
+                    className={`px-4 py-2 rounded-md text-white ${
+                      canSubmit
+                        ? "bg-blue-600 hover:bg-blue-700"
+                        : "bg-gray-400 cursor-not-allowed"
+                    }`}
+                  >
+                    {isSubmitting ? "Creating..." : "Create Website"}
+                  </button>
+                )}
+              </form.Subscribe>
+            </form>
           </div>
 
           <div className="p-4 border rounded-md">
