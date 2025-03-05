@@ -1,13 +1,8 @@
 import { Account, co, CoList, CoMap, Group, Profile } from "jazz-tools"
 
-// TODO: not actually sure what diff is there between Profile and User
-// is it public/private access only?
-
-// public fields
 export class JazzProfile extends Profile {
   username = co.string
 }
-// private fields
 export class AccountRoot extends CoMap {
   websites = co.ref(ListOfWebsites)
 }
