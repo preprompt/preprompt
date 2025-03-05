@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router"
 import { useAccount } from "jazz-react"
-import { Button } from "~/components/ui/button"
+import { Button } from "~/components/Button"
 import {
   Sidebar,
   SidebarContent,
@@ -9,8 +9,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-} from "~/components/ui/sidebar"
+} from "~/components/Sidebar"
 import { useCreateChat } from "~/hooks/useCreateChat"
+
+// TODO: breaking, first fix jazz CRUD
 
 function ChatLayout() {
   const navigate = useNavigate()

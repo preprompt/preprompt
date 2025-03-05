@@ -2,13 +2,11 @@ import { createFileRoute, useParams } from "@tanstack/react-router"
 import { useCoState } from "jazz-react"
 import { CoPlainText } from "jazz-tools"
 import { useEffect, useRef, useState } from "react"
-import { Button } from "~/components/ui/button"
-import { Input } from "~/components/ui/input"
+import { Button } from "~/components/Button"
+import { Input } from "~/components/Input"
 import { Chat, ChatMessage } from "~/jazz-schema"
 
-export const Route = createFileRoute("/app/$id")({
-  component: ChatPage,
-})
+// TODO: breaking, first fix jazz CRUD
 
 function ChatPage() {
   const { id } = useParams({ from: "/app/$id" })
@@ -114,3 +112,7 @@ function ChatPage() {
     </div>
   )
 }
+
+export const Route = createFileRoute("/app/$id")({
+  component: ChatPage,
+})
