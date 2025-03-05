@@ -27,7 +27,7 @@ function RouteComponent() {
       <main className="container flex flex-col gap-8">
         <div className="text-center">
           <pre className="text-left text-sm inline-block bg-white/50 p-4 rounded-lg overflow-auto max-w-full">
-            {JSON.stringify(me)}
+            {JSON.stringify({ ...me?.root })}
           </pre>
         </div>
         <div>
