@@ -1,9 +1,6 @@
 import { QueryClient } from "@tanstack/react-query"
 import { createRouter as createTanStackRouter } from "@tanstack/react-router"
 import { routerWithQueryClient } from "@tanstack/react-router-with-query"
-import { JazzInspector } from "jazz-inspector"
-import { JazzProvider } from "jazz-react"
-import { JazzAccount } from "~/jazz-schema"
 import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary"
 import { NotFound } from "./components/NotFound"
 import { routeTree } from "./routeTree.gen"
@@ -18,24 +15,6 @@ export function createRouter() {
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
       scrollRestoration: true,
-      // TODO: somehow should remove the need to put all of app in /app
-      // JazzProvider should be wrapping the entire router
-      // InnerWrap: ({ children }) => {
-      //   return (
-      //     <>
-      //       <JazzProvider
-      //         sync={{
-      //           peer: "wss://cloud.jazz.tools/?key=jazz@preprompt.app", // which server peer to sync jazz state with
-      //           when: "signedUp", // this way when user hasn't signed up, data is stored locally
-      //         }}
-      //         AccountSchema={JazzAccount}
-      //       >
-      //         {children}
-      //         <JazzInspector />
-      //       </JazzProvider>
-      //     </>
-      //   )
-      // },
     }),
     queryClient,
   )

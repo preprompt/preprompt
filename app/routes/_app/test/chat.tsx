@@ -4,6 +4,6 @@ function RouteComponent() {
   return <></>
 }
 
-export const Route = createFileRoute("/app/test/chat")({
+export const Route = createFileRoute("/_app/test/chat")({
   component: RouteComponent,
 })

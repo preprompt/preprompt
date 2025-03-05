@@ -3,13 +3,8 @@ import { useAccount, useIsAuthenticated } from "jazz-react"
 import { AuthButton } from "~/components/AuthButton"
 import { useForm } from "@tanstack/react-form"
 
-// TODO: this should work but it does not due to some tanstack start/router issues
-// see app/router.tsx for more details
-// https://tanstack.com/router/v1/docs/framework/react/api/router/RouterOptionsType#wrap-property and https://tanstack.com/router/v1/docs/framework/react/api/router/RouterOptionsType#innerwrap-property
-// were both tried with no success
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: {} })
-  console.log(me, "me")
   const isAuthenticated = useIsAuthenticated()
   const form = useForm({
     defaultValues: {
@@ -115,6 +110,6 @@ function RouteComponent() {
   )
 }
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_app/test/")({
   component: RouteComponent,
 })
