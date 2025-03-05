@@ -1,11 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router"
-import { useAccount, useIsAuthenticated } from "jazz-react"
-import { AuthButton } from "~/components/AuthButton"
 import { useForm } from "@tanstack/react-form"
+import { createFileRoute } from "@tanstack/react-router"
+import { useAccount } from "jazz-react"
+import { AuthButton } from "~/components/AuthButton"
 
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: {} })
-  const isAuthenticated = useIsAuthenticated()
   const form = useForm({
     defaultValues: {
       username: me?.profile?.name || "",
@@ -21,11 +20,6 @@ function RouteComponent() {
     <div className="flex flex-col gap-6 items-center justify-center min-h-screen w-full max-w-2xl mx-auto p-5">
       <header>
         <nav className="container flex flex-row gap-4 justify-between items-center py-3">
-          {isAuthenticated ? (
-            <span></span>
-          ) : (
-            <span>Auth to share data with another device</span>
-          )}
           <AuthButton />
         </nav>
       </header>

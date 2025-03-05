@@ -14,6 +14,8 @@ function LayoutComponent() {
         AccountSchema={JazzAccount}
       >
         <Outlet />
+        {/* TODO: pr jazz to pass prop to hide visual button */}
+        {/* TODO: pr jazz to make it work with dark mode nicely */}
         <div className="hidden">
           <JazzInspector />
         </div>
