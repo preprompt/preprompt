@@ -22,17 +22,17 @@ export class Url extends CoMap {
 export class ListOfUrls extends CoList.Of(co.ref(Url)) {}
 
 export class JazzAccount extends Account {
-  profile = co.ref(JazzProfile)
   root = co.ref(AccountRoot)
+  profile = co.ref(JazzProfile)
+
   migrate(this: JazzAccount) {
     if (this.root === undefined) {
-      const group = Group.create()
       this.root = AccountRoot.create(
         {
           websites: ListOfWebsites.create([]),
           activeUrls: ListOfUrls.create([]),
         },
-        group,
+        { owner: this },
       )
     }
   }
