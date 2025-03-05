@@ -1,5 +1,6 @@
 @import "tailwindcss" source("../");
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
+/* TODO: add font with tailwind v4 */
+/* @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"); */
 
 @layer base {
   :root {
@@ -25,13 +26,13 @@
 
   html,
   body {
-    @apply bg-neutral-950 text-neutral-200 font-grotesk;
+    @apply bg-neutral-950 text-neutral-200;
   }
   .using-mouse * {
     outline: none !important;
   }
 }
 
-.font-grotesk {
+/* .font-grotesk {
   font-family: "Space Grotesk", sans-serif;
-}
+} */

@@ -20,7 +20,7 @@ function RouteComponent() {
   const greetingTime = getGreetingTime()
 
   return (
-    <div className="flex flex-col font-grotesk items-center justify-center min-h-screen w-full max-w-2xl mx-auto p-5">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full max-w-2xl mx-auto p-5">
       <p className="text-2xl text-center mb-4">
         Good {greetingTime},<br />
         {userName?.toString() || "User"}. How can I help you today?
