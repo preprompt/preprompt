@@ -117,7 +117,7 @@ export default function Filters({
       {showSortModal && (
         <div
           id="sort-modal"
-          className="mb-4 p-3 bg-neutral-900 rounded-xl absolute z-10"
+          className="mb-4 p-3 bg-[#2b2b2bb9] backdrop-blur-sm rounded-2xl absolute z-10"
         >
           <h3 className="text-sm font-medium mb-2">Sort elements</h3>
           <div className="flex flex-col space-y-2">
@@ -146,7 +146,7 @@ export default function Filters({
       {showFilterModal && (
         <div
           id="filter-modal"
-          className="mb-4 p-3 bg-neutral-900 rounded-xl absolute z-10"
+          className="mb-4 p-3 bg-[#2b2b2bb9] backdrop-blur-sm rounded-2xl absolute z-10"
         >
           <h3 className="text-sm font-medium mb-2">Filter by type</h3>
           <div className="flex flex-col space-y-2">
@@ -173,7 +173,7 @@ export default function Filters({
       )}
 
       {filterType && (
-        <div className="mb-3 px-3 py-2 bg-neutral-900 rounded-xl text-xs inline-block">
+        <div className="mb-3 px-3 py-2 bg-[#2b2b2bb9] backdrop-blur-sm rounded-xl text-xs inline-block">
           Filter: <span className="font-semibold">{filterType}</span>
           <button
             onClick={() => applyFilter(null)}

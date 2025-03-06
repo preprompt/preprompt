@@ -25,7 +25,7 @@
 
   html,
   body {
-    @apply bg-[#0f0f10] text-neutral-200;
+    @apply bg-[#171717] text-neutral-200;
   }
   .using-mouse * {
     outline: none !important;

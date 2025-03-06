@@ -69,7 +69,7 @@ export default function Sidebar({
   return (
     <div
       className={cn(
-        "min-w-[20rem] bg-sidebar-background text-sidebar-foreground border-r border-sidebar-border h-full overflow-y-auto flex flex-col",
+        "min-w-[20rem] bg-sidebar-background text-sidebar-foreground border-r border-white/10 h-full overflow-y-auto flex flex-col",
         className,
       )}
     >
