@@ -11,7 +11,6 @@ import {
   faTable,
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons"
-import { cn } from "~/lib/utils"
 
 export type WebsiteElement = {
   id: string
@@ -69,14 +68,14 @@ const getIconForType = (type: string, isExpanded: boolean) => {
   }
 }
 
-const TreeItem: React.FC<TreeItemProps> = ({
+export default function TreeItem({
   node,
   level,
   onToggleExpand,
   onNodeSelect,
   expandedNodes,
   selectedNodes,
-}) => {
+}: TreeItemProps) {
   const isExpanded = expandedNodes.has(node.id)
   const isSelected = selectedNodes.has(node.id)
   const hasChildren = node.children && node.children.length > 0
@@ -186,5 +185,3 @@ const TreeItem: React.FC<TreeItemProps> = ({
     </div>
   )
 }
-
-export default TreeItem

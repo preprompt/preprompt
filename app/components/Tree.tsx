@@ -6,7 +6,7 @@ type TreeProps = {
   onSelectionChange?: (selectedNodes: WebsiteElement[]) => void
 }
 
-const Tree: React.FC<TreeProps> = ({ data, onSelectionChange }) => {
+export default function Tree({ data, onSelectionChange }: TreeProps) {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set())
   const [selectedNodes, setSelectedNodes] = useState<Set<string>>(new Set())
   const [initialized, setInitialized] = useState(false)
@@ -117,5 +117,3 @@ const Tree: React.FC<TreeProps> = ({ data, onSelectionChange }) => {
     </div>
   )
 }
-
-export default Tree
