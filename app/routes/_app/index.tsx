@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { useState, useEffect } from "react"
 import Sidebar from "~/components/Sidebar"
 import { WebsiteElement } from "~/components/TreeItem"
+import User from "~/components/User"
 
 function RouteComponent() {
   const [selectedElements, setSelectedElements] = useState<WebsiteElement[]>([])
@@ -50,7 +51,10 @@ function RouteComponent() {
         onWidthChange={changeSidebarWidth}
       />
       <div className="flex-1 p-6 overflow-auto">
-        <h1 className="text-2xl font-bold mb-6">Hello world</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Hello world</h1>
+          <User />
+        </div>
 
         {selectedElements.length > 0 && (
           <div className="mb-6">
