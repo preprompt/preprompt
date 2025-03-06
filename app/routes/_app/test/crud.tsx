@@ -3,7 +3,6 @@ import { useAccount, useIsAuthenticated } from "jazz-react"
 import { ListOfUrls, Website } from "~/jazz-schema"
 import { useForm } from "@tanstack/react-form"
 
-// TODO: use CRUD direct, not through `me`. see https://jazz.tools/docs/react/using-covalues/comaps
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: { websites: [] } })
   const isAuthenticated = useIsAuthenticated()

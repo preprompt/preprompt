@@ -18,7 +18,6 @@ export class Url extends CoMap {
 }
 export class ListOfUrls extends CoList.Of(co.ref(Url)) {}
 
-// TODO: do i need Profile?
 export class JazzAccount extends Account {
   root = co.ref(AccountRoot)
   migrate(this: JazzAccount) {
