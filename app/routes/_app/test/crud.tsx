@@ -3,6 +3,7 @@ import { useAccount, useIsAuthenticated } from "jazz-react"
 import { ListOfUrls, Website } from "~/jazz-schema"
 import { useForm } from "@tanstack/react-form"
 
+// TODO: use CRUD direct, not through `me`. see https://jazz.tools/docs/react/using-covalues/comaps
 function RouteComponent() {
   const { me } = useAccount({ profile: {}, root: { websites: [] } })
   const isAuthenticated = useIsAuthenticated()
@@ -23,8 +24,6 @@ function RouteComponent() {
           },
           { owner: me },
         )
-        // TODO: use CRUD direct, not through `me`. see https://jazz.tools/docs/react/using-covalues/comaps
-        // below fails as `websites` is of type `never` for some reason.
         me.root.websites.push(newWebsite)
       }
     },
