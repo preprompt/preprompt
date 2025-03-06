@@ -27,11 +27,17 @@ export class JazzAccount extends Account {
   // TODO: not sure if there should be `owner` in the account
   // i tried with both and without, and all options fail
   migrate(this: JazzAccount) {
-    if (this.root === undefined) {
-      this.root = AccountRoot.create({
-        websites: ListOfWebsites.create([]),
-        activeUrls: ListOfUrls.create([]),
-      })
-    }
+    // if (this.root === undefined) {
+    this.root = AccountRoot.create({
+      websites: ListOfWebsites.create([]),
+      activeUrls: ListOfUrls.create([]),
+    })
+    // }
+  }
+}
+
+declare module "jazz-react" {
+  interface Register {
+    Account: JazzAccount
   }
 }
