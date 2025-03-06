@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Sidebar from "~/components/Sidebar"
 import { WebsiteElement } from "~/components/TreeItem"
 
@@ -7,8 +7,9 @@ function RouteComponent() {
   const [selectedElements, setSelectedElements] = useState<WebsiteElement[]>([])
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisResult, setAnalysisResult] = useState<string | null>(null)
+  const [sidebarWidth, setSidebarWidth] = useState(250)
 
-  const handleAnalyzeSelection = (elements: WebsiteElement[]) => {
+  const analyzeSelection = (elements: WebsiteElement[]) => {
     setSelectedElements(elements)
     setIsAnalyzing(true)
 
@@ -25,9 +26,29 @@ function RouteComponent() {
     }, 1500)
   }
 
+  const changeSidebarWidth = (width: number) => {
+    setSidebarWidth(width)
+  }
+
+  useEffect(() => {
+    const handleResize = () => {
+      const maxWidth = window.innerWidth * 0.4
+      if (sidebarWidth > maxWidth) {
+        setSidebarWidth(maxWidth)
+      }
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [sidebarWidth])
+
   return (
     <div className="flex h-screen">
-      <Sidebar onAnalyzeSelection={handleAnalyzeSelection} />
+      <Sidebar
+        onAnalyzeSelection={analyzeSelection}
+        width={sidebarWidth}
+        onWidthChange={changeSidebarWidth}
+      />
       <div className="flex-1 p-6 overflow-auto">
         <h1 className="text-2xl font-bold mb-6">Hello world</h1>
 

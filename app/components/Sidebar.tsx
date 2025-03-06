@@ -4,15 +4,20 @@ import { WebsiteElement } from "./TreeItem"
 import { cn } from "~/lib/utils"
 import { testData, sortElements, filterElements } from "~/data/testData"
 import Filters from "./Filters"
+import ResizablePanel from "./ResizablePanel"
 
 type SidebarProps = {
   className?: string
   onAnalyzeSelection?: (selectedElements: WebsiteElement[]) => void
+  width?: number
+  onWidthChange?: (width: number) => void
 }
 
 export default function Sidebar({
   className,
   onAnalyzeSelection,
+  width = 250,
+  onWidthChange,
 }: SidebarProps) {
   const [initialized, setInitialized] = useState(false)
   const [selectedElements, setSelectedElements] = useState<WebsiteElement[]>([])
@@ -67,9 +72,11 @@ export default function Sidebar({
   }, [initialized, onAnalyzeSelection, selectedElements])
 
   return (
-    <div
+    <ResizablePanel
+      width={width}
+      onWidthChange={onWidthChange}
       className={cn(
-        "min-w-[20rem] bg-sidebar-background text-sidebar-foreground border-r border-white/10 h-full overflow-y-auto flex flex-col",
+        "bg-sidebar-background text-sidebar-foreground border-r border-white/10 h-full overflow-y-auto flex flex-col",
         className,
       )}
     >
@@ -84,6 +91,6 @@ export default function Sidebar({
 
         <Tree data={data} onSelectionChange={selectionChange} />
       </div>
-    </div>
+    </ResizablePanel>
   )
 }
