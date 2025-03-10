@@ -4,7 +4,7 @@ import { useAccount, useIsAuthenticated } from "jazz-react"
 import { AuthButton } from "~/components/AuthButton"
 
 function RouteComponent() {
-  const { me } = useAccount({ profile: {}, root: {} })
+  const { me } = useAccount({ profile: {}, root: { websites: [{}] } })
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate()
   const form = useForm({
@@ -28,7 +28,7 @@ function RouteComponent() {
       <main className="container flex flex-col gap-8">
         <div className="text-center">
           <pre className="text-left text-sm inline-block bg-white/50 p-4 rounded-lg overflow-auto max-w-full">
-            {JSON.stringify({ ...me?.root })}
+            {JSON.stringify({ ...me?.root.toJSON() })}
           </pre>
         </div>
         <div>

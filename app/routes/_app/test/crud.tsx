@@ -4,7 +4,7 @@ import { ListOfUrls, Website } from "~/jazz-schema"
 import { useForm } from "@tanstack/react-form"
 
 function RouteComponent() {
-  const { me } = useAccount({ profile: {}, root: { websites: [] } })
+  const { me } = useAccount({ profile: {}, root: { websites: [{}] } })
   const isAuthenticated = useIsAuthenticated()
   const navigate = useNavigate()
 
@@ -148,7 +148,7 @@ function RouteComponent() {
           <div className="p-4 border rounded-md">
             <h2 className="text-xl font-semibold mb-3">Your Websites</h2>
             <div className="flex flex-col gap-2">
-              {/* {me?.root.websites.map((website, index) => (
+              {me?.root.websites.map((website, index) => (
                 <div
                   key={index}
                   className="p-3 border rounded flex justify-between items-center"
@@ -160,7 +160,7 @@ function RouteComponent() {
                   <button
                     className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm"
                     onClick={() => {
-                      me?.websites.splice(index, 1)
+                      me?.root.websites.splice(index, 1)
                     }}
                   >
                     Delete
@@ -171,7 +171,7 @@ function RouteComponent() {
                 <p className="text-gray-500 italic">
                   No websites yet. Create one above!
                 </p>
-              )} */}
+              )}
             </div>
           </div>
         </div>
